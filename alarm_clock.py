@@ -25,7 +25,12 @@ def cmd_set(args: argparse.Namespace) -> None:
         print(f"Error: {time_str} is in the past. Set a future time.")
         sys.exit(1)
 
-    label = args.label or ""
+    label = (args.label or "")[:40]  # cap label at 40 chars to keep list readable
+
+    existing = [a for a in get_all_alarms() if a["time"] == time_str]
+    if existing:
+        print(f"Warning: an alarm already exists at {time_str} (id={existing[0]['id']}). Adding anyway.")
+
     alarm = add_alarm(time_str, label)
     print(f"Alarm set  id={alarm['id']}  time={alarm['time']}" + (f"  label={alarm['label']!r}" if label else ""))
 
