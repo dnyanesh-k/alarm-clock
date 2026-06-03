@@ -56,11 +56,17 @@ def cmd_cancel(args: argparse.Namespace) -> None:
 
 def cmd_start(args: argparse.Namespace) -> None:
     from alarm_runner import run_daemon
-    print("Alarm daemon started. Press Ctrl+C to stop.")
+    print("Alarm daemon started. Press Ctrl+C or run 'alarm_clock.py exit' to stop.")
     try:
         run_daemon()
     except KeyboardInterrupt:
-        print("\nDaemon stopped.")
+        print("\nAlarm clock stopped. Goodbye.")
+
+
+def cmd_exit(args: argparse.Namespace) -> None:
+    print("To stop the daemon, press Ctrl+C in the terminal where it is running.")
+    print("All pending alarms are saved and will fire when you restart.")
+    sys.exit(0)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -85,6 +91,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_start = sub.add_parser("start", help="Start the alarm daemon (blocking)")
     p_start.set_defaults(func=cmd_start)
+
+    p_exit = sub.add_parser("exit", help="Show how to stop the daemon gracefully")
+    p_exit.set_defaults(func=cmd_exit)
 
     return parser
 
