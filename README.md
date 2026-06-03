@@ -5,7 +5,7 @@ A lightweight command-line alarm clock written in pure Python (stdlib only, no d
 ## Requirements
 
 - Python 3.8+
-- No `pip install` needed
+- No `pip install` needed — stdlib only
 - WSL / Linux / macOS / Windows supported
 
 ## Usage
